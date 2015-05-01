@@ -39,8 +39,7 @@ router.get('/confirmacao', function(req, res, next) {
         from: 'filipemelodasilva@gmail.com', // sender address
         to: 'flpms@icloud.com', // list of receivers
         subject: 'Hello Teste NodeMailer✔', // Subject line
-        text: 'Se funcionar, funcionou ✔', // plaintext body
-        html: '<b>Hello world ✔</b>' // html body
+        html: '<b>Hello world ✔ <br /> Se funcionar funcionou.</b>' // html body
     };
 
     // send mail with defined transport object
