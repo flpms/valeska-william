@@ -5,15 +5,75 @@
         <link href="http://allfont.net/css/?fonts=english-157-bt" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="/stylesheets/style.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <link href="http://abs.twimg.com/favicons/favicon.ico" rel="shortcut icon" type="image/x-icon">
     </head>
     <body>
         <div class="couple-tree">
             {{{body}}}
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="rsvpModal" tabindex="-1" role="dialog" aria-labelledby="rsvpModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="rsvpModalLabel">Confirme a sua presença</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <form id="rsvpForm">
+                                <div class="row">
+                                    <div class="form-group col-md-offset-1 col-md-10">
+                                        <label for="names"><span class="glyphicon glyphicon-edit"></span> Nomes no Convite</label>
+                                        <input type="text" id="names" placeholder="Digite os nomes aqui..." class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-offset-1 col-md-10">
+                                        <label for="email"><span class="glyphicon glyphicon-envelope"></span> E-mail</label>
+                                        <input type="e-mail" id="email" placeholder="Digite seu e-mail aqui.." class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-offset-1 col-md-10">
+                                        <label for="message"><span class="glyphicon glyphicon-paperclip"></span> Adicionar mensagem aos noivos</label>
+                                        <textarea id="message" class="form-control" placeholder="Parabéns! Estamos muito feliz com o seu casamento."></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="sendConfirmation"><span class="glyphicon glyphicon-check"></span> Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Latest compiled and minified CSS -->
         <!-- Optional theme
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-        Latest compiled and minified JavaScript 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
+        Latest compiled and minified JavaScript -->
+        
+        <script src="/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#sendConfirmation').click(function() {
+
+                    var serializedData = $.param({
+                        "names" : $("#names").val(),
+                        "email" : $("#email").val(),
+                        "message" : $("#message").val()
+                    });
+
+                    $.post('/confirmacao', serializedData).fail(function(data){
+                        console.log('fail', data);
+                    }).done(function(data) {
+                        console.log('sucess', data);
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
