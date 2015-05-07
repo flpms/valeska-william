@@ -60,6 +60,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#sendConfirmation').click(function() {
+                    $("#names, #email, #message").prop( "disabled", true);
 
                     var serializedData = $.param({
                         "names" : $("#names").val(),
@@ -67,7 +68,8 @@
                         "message" : $("#message").val()
                     });
 
-                    $.post('/confirmacao', serializedData).fail(function(data){
+                    $.get('/confirmacao', serializedData).fail(function(data){
+                        $("#names, #email, #message").prop( "disabled", true);
                         console.log('fail', data);
                     }).done(function(data) {
                         console.log('sucess', data);
