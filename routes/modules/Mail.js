@@ -3,7 +3,7 @@ var xoauth2 = require('xoauth2');
 
 var Mail = function() {
     var self = this;
-    self.fillContent = function(name, from, message) {
+    self.fillContent = function(name, emailAddress, message) {
         var hasMessage = '';
 
         if (message) {
@@ -14,10 +14,10 @@ var Mail = function() {
         }
 
         return {
-            from: from, // sender address
-            to: 'flpms@icloud.com', // list of receivers
+            from: emailAddress, // sender address
+            to: 'william.ornaghi@icloud.com', // list of receivers
             subject: '[✓] Confirmando a presença de ' + name, // Subject line
-            html: '<h1>' +name + '</h1><h3>Estará no seu casamento'+hasMessage+'</h3>'+message+'<br /><br /><br />'+email // html body
+            html: '<h1>' + name + '</h1><h3>Estará no seu casamento'+ hasMessage +'</h3>'+ message +'<br /><br /><br />'+ emailAddress // html body
         };
     }
 

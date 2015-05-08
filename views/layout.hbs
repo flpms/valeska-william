@@ -12,6 +12,7 @@
         <div class="couple-tree">
             {{{body}}}
         </div>
+        <div class="message"></div>
 
         <!-- Modal -->
         <div class="modal fade" id="rsvpModal" tabindex="-1" role="dialog" aria-labelledby="rsvpModalLabel" aria-hidden="true">
@@ -43,6 +44,9 @@
                                     </div>
                                 </div>
                             </form>
+                            <div class="hidden alert alert-warning" role="alert" id="server-message">
+                                <b class="label label-warning">Aviso</b> <span></span>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -58,7 +62,15 @@
         
         <script src="/js/bootstrap.min.js"></script>
         <script type="text/javascript">
+
             $(document).ready(function() {
+                var errorAlert = function(){
+                    $("#names, #email, #message").prop( "disabled", true);
+                    $('#server-message span').text('Aconteceu algum erro, tente novamente');
+                    $('#server-message').removeClass('hidden');
+                    $('#server-message').show();
+                };
+
                 $('#sendConfirmation').click(function() {
                     $("#names, #email, #message").prop( "disabled", true);
 
@@ -69,10 +81,14 @@
                     });
 
                     $.get('/confirmacao', serializedData).fail(function(data){
-                        $("#names, #email, #message").prop( "disabled", true);
-                        console.log('fail', data);
+                        errorAlert();
                     }).done(function(data) {
-                        console.log('sucess', data);
+                        if (data && data.status === 'OK') {
+                            $('#rsvpModal').modal('hide')
+                            alert('Mensagem enviada com sucesso aos noivos!');
+                        } else {
+                            errorAlert();
+                        }
                     });
                 });
             });

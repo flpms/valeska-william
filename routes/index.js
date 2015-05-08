@@ -21,13 +21,14 @@ router.get('/mensagem', function(req, res, next) {
 });
 
 router.get('/confirmacao', function(req, res, next) {
-    var emailContent = mail.fillContent(req.query.names,req.query.email,req.query.message);
+    var emailContent = mail.fillContent(req.query.names, req.query.email, req.query.message);
 
     var afterSendEmail = function(error, info) {
         var result;
         var dataRes = {
         	status:''
         };
+
         if(error){
             dataRes.status = fail;
             dataRes.details = error;
